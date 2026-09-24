@@ -64,9 +64,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, onBackTo
                 <ShieldAlert className="w-3.5 h-3.5" /> {error}
               </p>
             )}
-            <p className="text-[11px] text-gray-500 mt-2">
-              Dica: a senha padrão inicial é <span className="text-gray-300 font-mono">admin123</span>
-            </p>
           </div>
 
           <button
