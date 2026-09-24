@@ -117,6 +117,7 @@ CREATE POLICY "Public order_items insert" ON order_items FOR INSERT WITH CHECK (
 CREATE POLICY "Admin order_items manage" ON order_items FOR ALL TO authenticated USING (true);
 
 -- Storage bucket for meat images
+-- Storage bucket for meat images
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('meat-images', 'meat-images', true)
 ON CONFLICT (id) DO NOTHING;
@@ -124,8 +125,54 @@ ON CONFLICT (id) DO NOTHING;
 CREATE POLICY "Public Meat Images Read" ON storage.objects
 FOR SELECT USING (bucket_id = 'meat-images');
 
-CREATE POLICY "Admin Meat Images Insert" ON storage.objects
-FOR INSERT TO authenticated WITH CHECK (bucket_id = 'meat-images');
+CREATE POLICY "Public Meat Images Insert" ON storage.objects
+FOR INSERT WITH CHECK (bucket_id = 'meat-images');
 
-CREATE POLICY "Admin Meat Images Delete" ON storage.objects
-FOR DELETE TO authenticated USING (bucket_id = 'meat-images');
+-- Full app access policies (permite sincronização completa do PWA e Admin)
+DROP POLICY IF EXISTS "Public products manage" ON products;
+CREATE POLICY "Public products manage" ON products FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public categories manage" ON categories;
+CREATE POLICY "Public categories manage" ON categories FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public settings manage" ON settings;
+CREATE POLICY "Public settings manage" ON settings FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public orders select" ON orders;
+CREATE POLICY "Public orders select" ON orders FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public orders update" ON orders FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public order_items select" ON order_items;
+CREATE POLICY "Public order_items select" ON order_items FOR SELECT USING (true);
+
+-- ==========================================================
+-- 7. DADOS INICIAIS (SEED)
+-- ==========================================================
+INSERT INTO categories (name, slug, sort_order) VALUES
+('CARNES NOBRES', 'carnes-nobres', 0),
+('CARNES DO DIA A DIA', 'carnes-do-dia-a-dia', 1),
+('ESPETINHOS', 'espetinhos', 2)
+ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO products (name, price, unit, category_name, image_url, is_active, is_featured, stock_status, sort_order) VALUES
+('Picanha aparada', 67.00, 'kg', 'CARNES NOBRES', '/images/meats/picanha.png', true, true, 'available', 1),
+('Filé', 55.00, 'kg', 'CARNES NOBRES', '/images/meats/contra_file.jpg', true, true, 'available', 2),
+('Contra-filé', 48.00, 'kg', 'CARNES NOBRES', '/images/meats/contra_file.jpg', true, true, 'available', 3),
+('Alcatra', 48.00, 'kg', 'CARNES NOBRES', '/images/meats/alcatra.png', true, true, 'available', 4),
+('Maminha', 48.00, 'kg', 'CARNES NOBRES', '/images/meats/maminha.jpg', true, false, 'available', 5),
+('Patinho', 45.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/patinho.webp', true, false, 'available', 6),
+('Coxão mole', 45.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/coxao_mole.webp', true, false, 'available', 7),
+('Cupim', 45.00, 'kg', 'CARNES NOBRES', '/images/meats/cupim.webp', true, false, 'available', 8),
+('Fraldinha', 42.00, 'kg', 'CARNES NOBRES', '/images/meats/fraldinha.jpg', true, false, 'available', 9),
+('Coxão duro', 42.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/coxao_duro.webp', true, false, 'available', 10),
+('Lagarto', 42.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/lagarto.webp', true, false, 'available', 11),
+('Acém', 28.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/acem.jpg', true, false, 'available', 12),
+('Paleta', 28.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/paleta.webp', true, false, 'available', 13),
+('Músculo sem osso', 28.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/musculo_sem_osso.jpg', true, false, 'available', 14),
+('Peito', 25.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/peito.webp', true, false, 'available', 15),
+('Costela', 25.00, 'kg', 'CARNES DO DIA A DIA', '/images/meats/costela.webp', true, false, 'available', 16),
+('Espetinho de carne', 5.50, 'unidade', 'ESPETINHOS', '/images/meats/contra_file.jpg', true, true, 'available', 17),
+('Coração', 5.00, 'unidade', 'ESPETINHOS', '/images/meats/contra_file.jpg', true, false, 'available', 18),
+('Frango', 4.50, 'unidade', 'ESPETINHOS', '/images/meats/contra_file.jpg', true, false, 'available', 19),
+('Porco', 4.50, 'unidade', 'ESPETINHOS', '/images/meats/contra_file.jpg', true, false, 'available', 20);
