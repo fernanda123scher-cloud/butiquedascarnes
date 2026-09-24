@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="128" fill="#111111"/>
+  <circle cx="256" cy="256" r="210" fill="#B5121B"/>
+  <circle cx="256" cy="256" r="195" fill="#7D0A10"/>
+  <!-- Meat / Steak Silhouette -->
+  <path d="M 330 150 C 370 170 385 220 370 270 C 355 320 320 365 260 375 C 200 385 150 350 135 295 C 120 240 145 180 195 155 C 235 135 290 130 330 150 Z" fill="#B5121B"/>
+  <path d="M 320 165 C 355 182 368 225 355 268 C 342 312 311 350 258 359 C 206 368 162 337 149 290 C 136 242 158 190 202 168 C 237 151 285 147 320 165 Z" fill="#FFFFFF"/>
+  <path d="M 305 185 C 330 198 340 230 330 262 C 320 295 296 324 255 331 C 214 338 180 314 170 278 C 160 241 177 201 210 185 C 237 172 275 169 305 185 Z" fill="#B5121B"/>
+  <!-- Bone mark -->
+  <circle cx="235" cy="235" r="28" fill="#FFFFFF"/>
+  <circle cx="235" cy="235" r="16" fill="#F4F4F4"/>
+  <!-- Meat Marbling Accent -->
+  <path d="M 285 220 Q 305 250 275 285" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.9"/>
+  <path d="M 245 290 Q 255 315 230 325" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.9"/>
+</svg>
